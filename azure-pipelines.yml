@@ -371,75 +371,75 @@ jobs:
       PathtoPublish: t/failed-test-artifacts
       ArtifactName: failed-test-artifacts
 
-- job: osx_clang
-  displayName: osx-clang
-  condition: succeeded()
-  pool:
-    vmImage: macOS-latest
-  steps:
-  - bash: |
-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+# - job: osx_clang
+#   displayName: osx-clang
+#   condition: succeeded()
+#   pool:
+#     vmImage: macOS-latest
+#   steps:
+#   - bash: |
+#        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
 
-       export CC=clang
+#        export CC=clang
 
-       ci/install-dependencies.sh || exit 1
-       ci/run-build-and-tests.sh || {
-           ci/print-test-failures.sh
-           exit 1
-       }
+#        ci/install-dependencies.sh || exit 1
+#        ci/run-build-and-tests.sh || {
+#            ci/print-test-failures.sh
+#            exit 1
+#        }
 
-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-    displayName: 'ci/run-build-and-tests.sh'
-    env:
-      GITFILESHAREPWD: $(gitfileshare.pwd)
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/TEST-*.xml'
-    inputs:
-      mergeTestResults: true
-      testRunTitle: 'osx-clang'
-      platform: macOS
-      publishRunAttachments: false
-    condition: succeededOrFailed()
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish trash directories of failed tests'
-    condition: failed()
-    inputs:
-      PathtoPublish: t/failed-test-artifacts
-      ArtifactName: failed-test-artifacts
+#        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
+#     displayName: 'ci/run-build-and-tests.sh'
+#     env:
+#       GITFILESHAREPWD: $(gitfileshare.pwd)
+#   - task: PublishTestResults@2
+#     displayName: 'Publish Test Results **/TEST-*.xml'
+#     inputs:
+#       mergeTestResults: true
+#       testRunTitle: 'osx-clang'
+#       platform: macOS
+#       publishRunAttachments: false
+#     condition: succeededOrFailed()
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish trash directories of failed tests'
+#     condition: failed()
+#     inputs:
+#       PathtoPublish: t/failed-test-artifacts
+#       ArtifactName: failed-test-artifacts
 
-- job: osx_gcc
-  displayName: osx-gcc
-  condition: succeeded()
-  pool:
-    vmImage: macOS-latest
-  steps:
-  - bash: |
-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+# - job: osx_gcc
+#   displayName: osx-gcc
+#   condition: succeeded()
+#   pool:
+#     vmImage: macOS-latest
+#   steps:
+#   - bash: |
+#        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
 
-       ci/install-dependencies.sh || exit 1
-       ci/run-build-and-tests.sh || {
-           ci/print-test-failures.sh
-           exit 1
-       }
+#        ci/install-dependencies.sh || exit 1
+#        ci/run-build-and-tests.sh || {
+#            ci/print-test-failures.sh
+#            exit 1
+#        }
 
-       test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
-    displayName: 'ci/run-build-and-tests.sh'
-    env:
-      GITFILESHAREPWD: $(gitfileshare.pwd)
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results **/TEST-*.xml'
-    inputs:
-      mergeTestResults: true
-      testRunTitle: 'osx-gcc'
-      platform: macOS
-      publishRunAttachments: false
-    condition: succeededOrFailed()
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish trash directories of failed tests'
-    condition: failed()
-    inputs:
-      PathtoPublish: t/failed-test-artifacts
-      ArtifactName: failed-test-artifacts
+#        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || umount "$HOME/test-cache" || exit 1
+#     displayName: 'ci/run-build-and-tests.sh'
+#     env:
+#       GITFILESHAREPWD: $(gitfileshare.pwd)
+#   - task: PublishTestResults@2
+#     displayName: 'Publish Test Results **/TEST-*.xml'
+#     inputs:
+#       mergeTestResults: true
+#       testRunTitle: 'osx-gcc'
+#       platform: macOS
+#       publishRunAttachments: false
+#     condition: succeededOrFailed()
+#   - task: PublishBuildArtifacts@1
+#     displayName: 'Publish trash directories of failed tests'
+#     condition: failed()
+#     inputs:
+#       PathtoPublish: t/failed-test-artifacts
+#       ArtifactName: failed-test-artifacts
 
 - job: gettext_poison
   displayName: GETTEXT_POISON
